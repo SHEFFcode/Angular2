@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Message} from "./message";
 @Component({
     selector: 'my-message',
@@ -34,5 +34,5 @@ import {Message} from "./message";
     `]
 })
 export class MessageComponent {
-    message: Message = new Message('Some more content', null, 'Jeremy');
+    @Input() message: Message;
 }
