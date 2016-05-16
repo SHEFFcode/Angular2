@@ -1,9 +1,10 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Message} from "./message";
+
 @Component({
     selector: 'my-message',
     template: `
-        <article class="panel panel-default">
+        <article class="panel panel-default" [ngStyle]="{'background-color': color}">
             <div class="panel-body">
                 {{ message.content }}
             </div>
@@ -12,7 +13,7 @@ import {Message} from "./message";
                         {{ message.username }}
                     </div>
                     <div class="config">
-                        <a href="#">Edit</a>
+                        <a href="#" (click)="onClick()">Edit</a>
                         <a href="#">Delete</a>
                     </div>
                 </footer>
@@ -35,4 +36,9 @@ import {Message} from "./message";
 })
 export class MessageComponent {
     @Input() message: Message;
+    @Output() editClicked = new EventEmitter<string>();
+
+    onClick () {
+        this.editClicked.emit('Changed');
+    }
 }

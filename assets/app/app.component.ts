@@ -12,12 +12,16 @@ import {Message} from "./messages/message";
         </div>
         <div class="row">
             <section class="col-md-8 col-md-offset-2">
-                <my-message [message]="message"></my-message>
+                <my-message *ngFor="let message of messages" [message]="message" (editClicked)="message.content = $event"></my-message>
             </section>
         </div>
     `,
     directives: [MessageComponent]
 })
 export class AppComponent {
-    message: Message = new Message ('A new Message', null, 'Jeremy');
+    messages: Message[] = [
+        new Message ('A new Message', null, 'Jeremy'),
+        new Message ('Another Message', null, 'Thoung'),
+        new Message ('A third Message', null, 'Lyly'),
+    ];
 }
