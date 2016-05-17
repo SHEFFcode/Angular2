@@ -19,7 +19,7 @@ import { HeaderComponent } from "./header.component";
     {path: '/auth', component: AuthenticationComponent},
 ])
 export class AppComponent {
-    constructor(private _router: Router) {}
+    constructor(private _router: Router) { }
     ngOnInit() {
         this._router.navigate(['/']);
     }

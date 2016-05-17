@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, ControlGroup, Validators } from '@angular/common';
+import { FormBuilder, ControlGroup, Validators, Control } from '@angular/common';
 
 @Component({
     selector: 'my-signup',
@@ -28,18 +28,28 @@ import { FormBuilder, ControlGroup, Validators } from '@angular/common';
     `
 })
 
-export class SignupComponent implements OnInit{
+export class SignupComponent implements OnInit {
     myForm: ControlGroup;
     constructor(private _fb:FormBuilder) { }
     ngOnInit () {
         this.myForm = this._fb.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
-            email: ['', Validators.required],
+            email: ['', Validators.compose([
+                Validators.required,
+                this.isEmail
+            ])],
             password: ['', Validators.required]
         });
     }
     onSubmit () {
         console.log(this.myForm.value);
+    }
+    private isEmail(control: Control): {[s: string]: boolean} {
+        var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+        if (control.value != "" && (control.value.length <= 5 || !EMAIL_REGEXP.test(control.value))) {
+            return { "incorrectMailFormat": true };
+        }
+        return null;
     }
 }
